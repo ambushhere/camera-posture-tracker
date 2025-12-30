@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posture Tracker — Ваша идеальная осанка</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- MediaPipe Pose JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Posture Tracker</h1>
+            <p>Следите за своей осанкой в реальном времени</p>
+        </header>
+
+        <main>
+            <div class="video-section">
+                <div class="video-wrapper">
+                    <video id="input-video" playsinline></video>
+                    <canvas id="output-canvas"></canvas>
+                    <div id="countdown" class="hidden">3</div>
+                    <div id="status-badge" class="badge">Ожидание...</div>
+                </div>
+            </div>
+
+            <div class="controls-section">
+                <div class="button-group">
+                    <button id="btn-calibrate" class="btn btn-primary">
+                        <span class="icon">🎯</span> Калибровка
+                    </button>
+                    <button id="btn-start" class="btn btn-success" disabled>
+                        <span class="icon">▶️</span> Старт
+                    </button>
+                    <button id="btn-stop" class="btn btn-danger" disabled>
+                        <span class="icon">⏸️</span> Пауза
+                    </button>
+                    <button id="btn-reset" class="btn btn-secondary">
+                        <span class="icon">🔄</span> Сброс
+                    </button>
+                </div>
+            </div>
+
+            <div class="metrics-section hidden" id="metrics-panel">
+                <div class="metric-card">
+                    <span class="label">Отклонение головы:</span>
+                    <span id="metric-head" class="value">0°</span>
+                </div>
+                <div class="metric-card">
+                    <span class="label">Наклон плеч:</span>
+                    <span id="metric-shoulders" class="value">0°</span>
+                </div>
+            </div>
+        </main>
+
+        <div id="notification-container"></div>
+    </div>
+
+    <!-- App Logic -->
+    <script src="scripts/notifications.js"></script>
+    <script src="scripts/camera.js"></script>
+    <script src="scripts/poseDetection.js"></script>
+    <script src="scripts/calibration.js"></script>
+    <script src="scripts/postureAnalysis.js"></script>
+    <script src="scripts/app.js"></script>
+</body>
+</html>
