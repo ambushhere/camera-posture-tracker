@@ -159,6 +159,11 @@ header p {
     color: white;
 }
 
+.btn-info {
+    background: #6366f1;
+    color: white;
+}
+
 .btn-primary:hover {
     background: #2563eb;
 }
@@ -173,6 +178,10 @@ header p {
 
 .btn-secondary:hover {
     background: #475569;
+}
+
+.btn-info:hover {
+    background: #4f46e5;
 }
 
 .metrics-section {

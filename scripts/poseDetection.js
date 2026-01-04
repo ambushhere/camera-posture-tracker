@@ -5,6 +5,7 @@ const statusBadge = document.getElementById('status-badge');
 
 let pose;
 let camera;
+let showSkeleton = true;
 
 function onResults(results) {
     // Resize canvas to match video
@@ -19,10 +20,12 @@ function onResults(results) {
     // We don't draw the video here because the video element is already visible behind
     // But we can draw landmarks if we want
     if (results.poseLandmarks) {
-        drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS,
-            { color: '#00FF00', lineWidth: 2 });
-        drawLandmarks(canvasCtx, results.poseLandmarks,
-            { color: '#FF0000', lineWidth: 1, radius: 3 });
+        if (showSkeleton) {
+            drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS,
+                { color: '#00FF00', lineWidth: 2 });
+            drawLandmarks(canvasCtx, results.poseLandmarks,
+                { color: '#FF0000', lineWidth: 1, radius: 3 });
+        }
 
         // Custom event for results
         const event = new CustomEvent('poseResults', { detail: results });

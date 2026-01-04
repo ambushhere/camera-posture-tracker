@@ -57,4 +57,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         shoulderThreshold = parseInt(e.target.value);
         valShoulders.textContent = shoulderThreshold;
     });
+
+    // Toggle Skeleton Logic
+    const btnToggleSkeleton = document.getElementById('btn-toggle-skeleton');
+    btnToggleSkeleton.addEventListener('click', () => {
+        showSkeleton = !showSkeleton;
+        btnToggleSkeleton.innerHTML = showSkeleton ?
+            '<span class="icon">🦴</span> Скрыть скелет' :
+            '<span class="icon">🦴</span> Показать скелет';
+
+        // Clear canvas if hiding
+        if (!showSkeleton) {
+            canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+        }
+    });
 });
