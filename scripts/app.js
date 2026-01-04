@@ -41,4 +41,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         btnStart.disabled = true;
         btnStop.disabled = true;
     });
+
+    // Sensitivity Settings
+    const rangeHead = document.getElementById('range-head');
+    const rangeShoulders = document.getElementById('range-shoulders');
+    const valHead = document.getElementById('val-head');
+    const valShoulders = document.getElementById('val-shoulders');
+
+    rangeHead.addEventListener('input', (e) => {
+        headThreshold = parseInt(e.target.value);
+        valHead.textContent = headThreshold;
+    });
+
+    rangeShoulders.addEventListener('input', (e) => {
+        shoulderThreshold = parseInt(e.target.value);
+        valShoulders.textContent = shoulderThreshold;
+    });
 });

@@ -1,5 +1,9 @@
 let isMonitoring = false;
 
+// Sensitivity thresholds (can be updated from app.js)
+let headThreshold = 12;
+let shoulderThreshold = 10;
+
 function calculateAngle(p1, p2) {
     // Angle with vertical line
     const dy = p2.y - p1.y;
@@ -14,8 +18,6 @@ function analyzePosture(currentLandmarks) {
     const NOSE = 0;
     const L_SHOULDER = 11;
     const R_SHOULDER = 12;
-    const L_EAR = 7;
-    const R_EAR = 8;
 
     // Current metrics
     const shoulderAngle = calculateAngle(currentLandmarks[L_SHOULDER], currentLandmarks[R_SHOULDER]);
@@ -39,9 +41,9 @@ function analyzePosture(currentLandmarks) {
     document.getElementById('metric-shoulders').textContent = `${Math.round(shoulderDiff)}°`;
 
     // Thresholds
-    if (neckDiff > 12) {
+    if (neckDiff > headThreshold) {
         notifications.show('Выпрямите шею! Голова слишком опущена или наклонена.', 'notification');
-    } else if (shoulderDiff > 10) {
+    } else if (shoulderDiff > shoulderThreshold) {
         notifications.show('Выровняйте плечи! Замечен перекос.', 'notification');
     }
 }
