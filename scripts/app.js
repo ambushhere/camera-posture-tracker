@@ -7,14 +7,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Init Pose & Camera
     try {
-        updateStatus('Инициализация камеры...', 'var(--accent-color)');
+        updateStatus('Initializing camera...', 'var(--accent-color)');
         await initPose();
         await camera.start();
-        updateStatus('Готов к работе', 'rgba(0,0,0,0.6)');
+        updateStatus('Ready', 'rgba(0,0,0,0.6)');
     } catch (err) {
         console.error(err);
-        updateStatus('Ошибка доступа к камере', 'var(--danger-color)');
-        notifications.show('Не удалось получить доступ к камере или загрузить ML модель.', 'danger');
+        updateStatus('Camera access error', 'var(--danger-color)');
+        notifications.show('Failed to access camera or load ML model.', 'danger');
     }
 
     // Event Listeners
@@ -26,14 +26,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         isMonitoring = true;
         btnStart.disabled = true;
         btnStop.disabled = false;
-        updateStatus('Мониторинг активен 🟢', 'var(--success-color)');
+        updateStatus('Monitoring active 🟢', 'var(--success-color)');
     });
 
     btnStop.addEventListener('click', () => {
         isMonitoring = false;
         btnStart.disabled = false;
         btnStop.disabled = true;
-        updateStatus('Мониторинг приостановлен 🟡', 'var(--warning-color)');
+        updateStatus('Monitoring paused 🟡', 'var(--warning-color)');
     });
 
     btnReset.addEventListener('click', () => {
@@ -63,8 +63,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     btnToggleSkeleton.addEventListener('click', () => {
         showSkeleton = !showSkeleton;
         btnToggleSkeleton.innerHTML = showSkeleton ?
-            '<span class="icon">🦴</span> Скрыть скелет' :
-            '<span class="icon">🦴</span> Показать скелет';
+            '<span class="icon">🦴</span> Hide Skeleton' :
+            '<span class="icon">🦴</span> Show Skeleton';
 
         // Clear canvas if hiding
         if (!showSkeleton) {

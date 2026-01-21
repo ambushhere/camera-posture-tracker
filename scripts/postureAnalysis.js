@@ -42,9 +42,9 @@ function analyzePosture(currentLandmarks) {
 
     // Thresholds
     if (neckDiff > headThreshold) {
-        notifications.show('Выпрямите шею! Голова слишком опущена или наклонена.', 'notification');
+        notifications.show('Straighten your neck! Head is too low or tilted.', 'notification');
     } else if (shoulderDiff > shoulderThreshold) {
-        notifications.show('Выровняйте плечи! Замечен перекос.', 'notification');
+        notifications.show('Level your shoulders! Tilt detected.', 'notification');
     }
 }
 
