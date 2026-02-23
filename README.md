@@ -1,4 +1,5 @@
 # Posture Tracker 🎯
+<img width="2816" height="1536" alt="Gemini_Generated_Image_peq45xpeq45xpeq4" src="https://github.com/user-attachments/assets/d4002972-ca9d-4a91-becb-0ff9035f3077" />
 
 A real-time web application designed to help you maintain a healthy posture using AI-powered pose detection. The app monitors your head and shoulder alignment through your webcam and alerts you when you start to slouch or lean.
 
