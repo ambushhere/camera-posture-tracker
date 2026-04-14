@@ -4,6 +4,8 @@ class NotificationManager {
         this.cooldown = 15000; // 15 seconds
         this.lastNotificationTime = 0;
         this.audioCtx = null;
+        this.customSoundUrl = localStorage.getItem('customAlertSound');
+        this.customSoundName = localStorage.getItem('customAlertSoundName');
     }
 
     initAudio() {
@@ -12,7 +14,34 @@ class NotificationManager {
         }
     }
 
+    setCustomSound(dataUrl, fileName) {
+        this.customSoundUrl = dataUrl;
+        this.customSoundName = fileName;
+        localStorage.setItem('customAlertSound', dataUrl);
+        localStorage.setItem('customAlertSoundName', fileName);
+    }
+
+    removeCustomSound() {
+        this.customSoundUrl = null;
+        this.customSoundName = null;
+        localStorage.removeItem('customAlertSound');
+        localStorage.removeItem('customAlertSoundName');
+    }
+
     playWarningSound() {
+        if (this.customSoundUrl) {
+            const audio = new Audio(this.customSoundUrl);
+            audio.volume = 0.3;
+            audio.play().catch(() => {
+                // Fall back to default sound if custom sound fails
+                this.playDefaultSound();
+            });
+            return;
+        }
+        this.playDefaultSound();
+    }
+
+    playDefaultSound() {
         this.initAudio();
 
         const oscillator = this.audioCtx.createOscillator();

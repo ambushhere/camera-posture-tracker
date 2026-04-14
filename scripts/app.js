@@ -71,6 +71,56 @@ document.addEventListener('DOMContentLoaded', async () => {
         valShoulders.textContent = shoulderThreshold;
     });
 
+    // Custom Alert Sound
+    const customSoundUpload = document.getElementById('custom-sound-upload');
+    const customSoundName = document.getElementById('custom-sound-name');
+    const btnRemoveSound = document.getElementById('btn-remove-sound');
+    const btnPreviewSound = document.getElementById('btn-preview-sound');
+
+    // Restore custom sound name on load
+    if (notifications.customSoundName) {
+        customSoundName.textContent = notifications.customSoundName;
+        btnRemoveSound.classList.remove('hidden');
+    }
+
+    customSoundUpload.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        if (!file.type.startsWith('audio/')) {
+            notifications.show('Please select a valid audio file.', 'warning');
+            return;
+        }
+
+        // Limit file size to 1MB to fit in localStorage
+        if (file.size > 1024 * 1024) {
+            notifications.show('Audio file must be under 1 MB.', 'warning');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            notifications.setCustomSound(event.target.result, file.name);
+            customSoundName.textContent = file.name;
+            btnRemoveSound.classList.remove('hidden');
+            notifications.show('Custom alert sound uploaded!', 'success');
+        };
+        reader.readAsDataURL(file);
+        // Reset input so the same file can be re-uploaded
+        e.target.value = '';
+    });
+
+    btnRemoveSound.addEventListener('click', () => {
+        notifications.removeCustomSound();
+        customSoundName.textContent = 'Default (beep)';
+        btnRemoveSound.classList.add('hidden');
+        notifications.show('Custom sound removed. Using default beep.', 'success');
+    });
+
+    btnPreviewSound.addEventListener('click', () => {
+        notifications.playWarningSound();
+    });
+
     // Toggle Skeleton Logic
     const btnToggleSkeleton = document.getElementById('btn-toggle-skeleton');
     btnToggleSkeleton.addEventListener('click', () => {

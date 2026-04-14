@@ -324,6 +324,37 @@ header p {
     cursor: pointer;
 }
 
+.btn-sm {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    border-radius: 8px;
+}
+
+.custom-sound-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.custom-sound-status {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    padding: 8px 12px;
+    background: var(--bg-color);
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.custom-sound-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.custom-sound-buttons label.btn {
+    margin: 0;
+}
+
 /* Focus styles for accessibility */
 .btn:focus-visible {
     outline: 3px solid var(--accent-color);

@@ -75,6 +75,28 @@
                             id="val-shoulders">10</span>°</label>
                     <input type="range" id="range-shoulders" min="5" max="30" value="10">
                 </div>
+
+                <h3>Alert Sound</h3>
+                <div class="setting-item">
+                    <label>Custom Alert Sound</label>
+                    <div class="custom-sound-controls">
+                        <div id="custom-sound-status" class="custom-sound-status">
+                            <span id="custom-sound-name">Default (beep)</span>
+                        </div>
+                        <div class="custom-sound-buttons">
+                            <label for="custom-sound-upload" class="btn btn-primary btn-sm" aria-label="Upload custom alert sound">
+                                <span class="icon" aria-hidden="true">🔊</span> Upload Sound
+                            </label>
+                            <input type="file" id="custom-sound-upload" accept="audio/*" class="hidden">
+                            <button id="btn-preview-sound" class="btn btn-info btn-sm" aria-label="Preview alert sound">
+                                <span class="icon" aria-hidden="true">▶️</span> Preview
+                            </button>
+                            <button id="btn-remove-sound" class="btn btn-danger btn-sm hidden" aria-label="Remove custom alert sound">
+                                <span class="icon" aria-hidden="true">✕</span> Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
 
