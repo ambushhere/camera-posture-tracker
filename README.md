@@ -3,6 +3,8 @@
 
 A real-time web application designed to help you maintain a healthy posture using AI-powered pose detection. The app monitors your head and shoulder alignment through your webcam and alerts you when you start to slouch or lean.
 
+**[▶️ Try it live on GitHub Pages](https://ambushhere.github.io/camera-posture-tracker/)**
+
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Technology](https://img.shields.io/badge/technology-MediaPipe-green.svg)
 

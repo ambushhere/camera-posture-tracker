@@ -10,11 +10,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         updateStatus('Initializing camera...', 'var(--accent-color)');
         await initPose();
         await camera.start();
-        updateStatus('Ready', 'rgba(0,0,0,0.6)');
+        updateStatus('Ready — Click Calibrate to begin', 'rgba(0,0,0,0.6)');
     } catch (err) {
         console.error(err);
-        updateStatus('Camera access error', 'var(--danger-color)');
-        notifications.show('Failed to access camera or load ML model.', 'danger');
+        const isPermissionDenied = err.name === 'NotAllowedError';
+        const isNotFound = err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError';
+
+        if (isPermissionDenied) {
+            updateStatus('Camera access denied', 'var(--danger-color)');
+            notifications.show('Please allow camera access in your browser settings and reload.', 'danger');
+        } else if (isNotFound) {
+            updateStatus('No camera found', 'var(--danger-color)');
+            notifications.show('No camera detected. Please connect a webcam and reload.', 'danger');
+        } else {
+            updateStatus('Initialization error', 'var(--danger-color)');
+            notifications.show('Failed to initialize. Check your camera and try reloading.', 'danger');
+        }
+
+        btnCalibrate.disabled = true;
     }
 
     // Event Listeners

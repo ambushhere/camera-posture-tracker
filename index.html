@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Real-time AI-powered posture tracker using your webcam. Monitor head and shoulder alignment with instant alerts — all processing stays in your browser.">
+    <meta name="theme-color" content="#3b82f6">
     <title>Posture Tracker — Your Perfect Posture</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
     <link rel="stylesheet" href="styles/main.css">
     <!-- MediaPipe Pose JS -->
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
@@ -23,29 +26,29 @@
         <main>
             <div class="video-section">
                 <div class="video-wrapper">
-                    <video id="input-video" playsinline></video>
-                    <canvas id="output-canvas"></canvas>
-                    <div id="countdown" class="hidden">3</div>
-                    <div id="status-badge" class="badge">Waiting...</div>
+                    <video id="input-video" playsinline aria-label="Camera feed for posture tracking"></video>
+                    <canvas id="output-canvas" aria-label="Pose skeleton overlay"></canvas>
+                    <div id="countdown" class="hidden" aria-live="polite" role="timer">3</div>
+                    <div id="status-badge" class="badge" aria-live="polite" role="status">Waiting...</div>
                 </div>
             </div>
 
             <div class="controls-section">
                 <div class="button-group">
-                    <button id="btn-calibrate" class="btn btn-primary">
-                        <span class="icon">🎯</span> Calibrate
+                    <button id="btn-calibrate" class="btn btn-primary" aria-label="Calibrate posture reference">
+                        <span class="icon" aria-hidden="true">🎯</span> Calibrate
                     </button>
-                    <button id="btn-start" class="btn btn-success" disabled>
-                        <span class="icon">▶️</span> Start
+                    <button id="btn-start" class="btn btn-success" disabled aria-label="Start posture monitoring">
+                        <span class="icon" aria-hidden="true">▶️</span> Start
                     </button>
-                    <button id="btn-stop" class="btn btn-danger" disabled>
-                        <span class="icon">⏸️</span> Pause
+                    <button id="btn-stop" class="btn btn-danger" disabled aria-label="Pause posture monitoring">
+                        <span class="icon" aria-hidden="true">⏸️</span> Pause
                     </button>
-                    <button id="btn-reset" class="btn btn-secondary">
-                        <span class="icon">🔄</span> Reset
+                    <button id="btn-reset" class="btn btn-secondary" aria-label="Reset calibration">
+                        <span class="icon" aria-hidden="true">🔄</span> Reset
                     </button>
-                    <button id="btn-toggle-skeleton" class="btn btn-info">
-                        <span class="icon">🦴</span> Hide Skeleton
+                    <button id="btn-toggle-skeleton" class="btn btn-info" aria-label="Toggle skeleton overlay visibility">
+                        <span class="icon" aria-hidden="true">🦴</span> Hide Skeleton
                     </button>
                 </div>
             </div>
@@ -75,7 +78,7 @@
             </div>
         </main>
 
-        <div id="notification-container"></div>
+        <div id="notification-container" aria-live="assertive" role="alert"></div>
     </div>
 
     <!-- App Logic -->
