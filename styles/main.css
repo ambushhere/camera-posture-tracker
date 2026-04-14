@@ -233,6 +233,22 @@ header p {
     font-weight: 600;
 }
 
+.notification.success {
+    background: var(--success-color);
+    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.4);
+}
+
+.notification.warning {
+    background: var(--warning-color);
+    color: var(--text-primary);
+    box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.4);
+}
+
+.notification.danger {
+    background: var(--danger-color);
+    box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.4);
+}
+
 @keyframes slideIn {
     from {
         transform: translateY(-100%);
@@ -296,4 +312,59 @@ header p {
 
 .setting-item input[type="range"]::-webkit-slider-thumb:hover {
     transform: scale(1.2);
+}
+
+/* Firefox range thumb */
+.setting-item input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+}
+
+/* Focus styles for accessibility */
+.btn:focus-visible {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+.setting-item input[type="range"]:focus-visible {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    body {
+        padding: 8px;
+    }
+
+    .app-container {
+        padding: 20px 16px;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .button-group {
+        gap: 8px;
+    }
+
+    .btn {
+        padding: 10px 14px;
+        font-size: 0.85rem;
+    }
+
+    .metrics-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .notification {
+        padding: 12px 20px;
+        font-size: 0.875rem;
+    }
 }

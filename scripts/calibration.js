@@ -7,6 +7,7 @@ async function startCalibration() {
 
     const countdownEl = document.getElementById('countdown');
     countdownEl.classList.remove('hidden');
+    countdownEl.textContent = '3';
 
     let count = 3;
     updateStatus('Assume the correct posture...', 'var(--warning-color)');
@@ -17,7 +18,10 @@ async function startCalibration() {
             countdownEl.textContent = count;
         } else {
             clearInterval(timer);
-            countdownEl.classList.add('hidden');
+            countdownEl.textContent = '✓';
+            setTimeout(() => {
+                countdownEl.classList.add('hidden');
+            }, 500);
             captureReference();
         }
     }, 1000);

@@ -1,0 +1,16 @@
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor files
+*.code-workspace
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node (if used for local serving)
+node_modules/
+package-lock.json
