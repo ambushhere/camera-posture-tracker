@@ -3,12 +3,19 @@ let isMonitoring = false;
 // Sensitivity thresholds (can be updated from app.js)
 let headThreshold = 12;
 let shoulderThreshold = 10;
+const MIN_LANDMARK_VISIBILITY = 0.6;
 
 function calculateAngle(p1, p2) {
     // Angle with vertical line
     const dy = p2.y - p1.y;
     const dx = p2.x - p1.x;
     return Math.atan2(dx, dy) * (180 / Math.PI);
+}
+
+function isReliableLandmark(point) {
+    if (!point) return false;
+    if (typeof point.visibility !== 'number') return true; // fallback for models without visibility
+    return point.visibility >= MIN_LANDMARK_VISIBILITY;
 }
 
 function analyzePosture(currentLandmarks) {
@@ -19,18 +26,38 @@ function analyzePosture(currentLandmarks) {
     const L_SHOULDER = 11;
     const R_SHOULDER = 12;
 
+    const currentNose = currentLandmarks[NOSE];
+    const currentLeftShoulder = currentLandmarks[L_SHOULDER];
+    const currentRightShoulder = currentLandmarks[R_SHOULDER];
+
+    const referenceNose = referencePose[NOSE];
+    const referenceLeftShoulder = referencePose[L_SHOULDER];
+    const referenceRightShoulder = referencePose[R_SHOULDER];
+
+    const currentReliable = isReliableLandmark(currentNose)
+        && isReliableLandmark(currentLeftShoulder)
+        && isReliableLandmark(currentRightShoulder);
+
+    const referenceReliable = isReliableLandmark(referenceNose)
+        && isReliableLandmark(referenceLeftShoulder)
+        && isReliableLandmark(referenceRightShoulder);
+
+    if (!currentReliable || !referenceReliable) {
+        return;
+    }
+
     // Current metrics
-    const shoulderAngle = calculateAngle(currentLandmarks[L_SHOULDER], currentLandmarks[R_SHOULDER]);
-    const neckAngle = calculateAngle(currentLandmarks[NOSE], {
-        x: (currentLandmarks[L_SHOULDER].x + currentLandmarks[R_SHOULDER].x) / 2,
-        y: (currentLandmarks[L_SHOULDER].y + currentLandmarks[R_SHOULDER].y) / 2
+    const shoulderAngle = calculateAngle(currentLeftShoulder, currentRightShoulder);
+    const neckAngle = calculateAngle(currentNose, {
+        x: (currentLeftShoulder.x + currentRightShoulder.x) / 2,
+        y: (currentLeftShoulder.y + currentRightShoulder.y) / 2
     });
 
     // Reference metrics
-    const refShoulderAngle = calculateAngle(referencePose[L_SHOULDER], referencePose[R_SHOULDER]);
-    const refNeckAngle = calculateAngle(referencePose[NOSE], {
-        x: (referencePose[L_SHOULDER].x + referencePose[R_SHOULDER].x) / 2,
-        y: (referencePose[L_SHOULDER].y + referencePose[R_SHOULDER].y) / 2
+    const refShoulderAngle = calculateAngle(referenceLeftShoulder, referenceRightShoulder);
+    const refNeckAngle = calculateAngle(referenceNose, {
+        x: (referenceLeftShoulder.x + referenceRightShoulder.x) / 2,
+        y: (referenceLeftShoulder.y + referenceRightShoulder.y) / 2
     });
 
     // Update UI

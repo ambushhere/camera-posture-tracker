@@ -100,7 +100,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const reader = new FileReader();
         reader.onload = (event) => {
-            notifications.setCustomSound(event.target.result, file.name);
+            const saved = notifications.setCustomSound(event.target.result, file.name);
+            if (!saved) {
+                notifications.show('Could not save custom sound (browser storage limit). Using default beep.', 'warning');
+                customSoundName.textContent = 'Default (beep)';
+                btnRemoveSound.classList.add('hidden');
+                return;
+            }
+
             customSoundName.textContent = file.name;
             btnRemoveSound.classList.remove('hidden');
             notifications.show('Custom alert sound uploaded!', 'success');

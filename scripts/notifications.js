@@ -1,11 +1,38 @@
 class NotificationManager {
     constructor(containerId) {
         this.container = document.getElementById(containerId);
-        this.cooldown = 15000; // 15 seconds
-        this.lastNotificationTime = 0;
+        this.cooldown = 15000; // 15 seconds for posture warning alerts
+        this.lastNotificationTimes = { notification: 0 };
         this.audioCtx = null;
-        this.customSoundUrl = localStorage.getItem('customAlertSound');
-        this.customSoundName = localStorage.getItem('customAlertSoundName');
+        this.customSoundUrl = this.safeStorageGet('customAlertSound');
+        this.customSoundName = this.safeStorageGet('customAlertSoundName');
+    }
+
+    safeStorageGet(key) {
+        try {
+            return localStorage.getItem(key);
+        } catch (error) {
+            console.warn('Unable to read from localStorage:', error);
+            return null;
+        }
+    }
+
+    safeStorageSet(key, value) {
+        try {
+            localStorage.setItem(key, value);
+            return true;
+        } catch (error) {
+            console.warn('Unable to save to localStorage:', error);
+            return false;
+        }
+    }
+
+    safeStorageRemove(key) {
+        try {
+            localStorage.removeItem(key);
+        } catch (error) {
+            console.warn('Unable to remove from localStorage:', error);
+        }
     }
 
     initAudio() {
@@ -17,15 +44,27 @@ class NotificationManager {
     setCustomSound(dataUrl, fileName) {
         this.customSoundUrl = dataUrl;
         this.customSoundName = fileName;
-        localStorage.setItem('customAlertSound', dataUrl);
-        localStorage.setItem('customAlertSoundName', fileName);
+
+        const soundSaved = this.safeStorageSet('customAlertSound', dataUrl);
+        const nameSaved = this.safeStorageSet('customAlertSoundName', fileName);
+
+        if (!soundSaved || !nameSaved) {
+            // Roll back in-memory state if persistence fails
+            this.customSoundUrl = null;
+            this.customSoundName = null;
+            this.safeStorageRemove('customAlertSound');
+            this.safeStorageRemove('customAlertSoundName');
+            return false;
+        }
+
+        return true;
     }
 
     removeCustomSound() {
         this.customSoundUrl = null;
         this.customSoundName = null;
-        localStorage.removeItem('customAlertSound');
-        localStorage.removeItem('customAlertSoundName');
+        this.safeStorageRemove('customAlertSound');
+        this.safeStorageRemove('customAlertSoundName');
     }
 
     playWarningSound() {
@@ -63,7 +102,13 @@ class NotificationManager {
 
     show(message, type = 'warning') {
         const now = Date.now();
-        if (now - this.lastNotificationTime < this.cooldown) return;
+        const shouldCooldown = type === 'notification';
+
+        if (shouldCooldown) {
+            const lastTime = this.lastNotificationTimes.notification || 0;
+            if (now - lastTime < this.cooldown) return;
+            this.lastNotificationTimes.notification = now;
+        }
 
         // Play sound
         if (type === 'notification' || type === 'warning') {
@@ -75,7 +120,6 @@ class NotificationManager {
         notification.textContent = message;
 
         this.container.appendChild(notification);
-        this.lastNotificationTime = now;
 
         setTimeout(() => {
             notification.style.opacity = '0';
