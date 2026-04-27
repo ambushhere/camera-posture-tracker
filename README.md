@@ -17,6 +17,13 @@ A real-time web application designed to help you maintain a healthy posture usin
 - **Adjustable Sensitivity**: Fine-tune head and shoulder tilt thresholds to suit your needs.
 - **Privacy Focused**: All processing is done locally in your browser. No video data is sent to any server.
 
+## 📈 Result / Impact
+
+- Improved posture alert accuracy with better calibration and threshold behavior.
+- Increased app stability by hardening notification and posture-analysis logic.
+- Delivered privacy-preserving UX: all inference runs locally in-browser (no video upload).
+- Published as a live GitHub Pages demo for fast recruiter/peer validation.
+
 ## 🚀 Getting Started
 
 ### Prerequisites
